@@ -27,7 +27,7 @@ namespace WorldCities
             {
                 configuration.RootPath = "ClientApp/dist";
             });
-
+            services.AddCors();
             services.AddDbContext<ApplicationDbContext>(options => options.UseSqlServer(Configuration.GetConnectionString("WorldCities")));
         }
 
@@ -50,6 +50,12 @@ namespace WorldCities
             }
 
             app.UseRouting();
+
+            app.UseCors(x => x
+                .AllowAnyMethod()
+                .AllowAnyHeader()
+                .SetIsOriginAllowed(origin => true)
+                .AllowCredentials());
 
             app.UseEndpoints(endpoints =>
             {
