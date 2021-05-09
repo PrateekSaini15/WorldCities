@@ -1,4 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Inject } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+
+import {City} from './city';
 
 @Component({
   selector: 'app-cities',
@@ -7,9 +10,14 @@ import { Component, OnInit } from '@angular/core';
 })
 export class CitiesComponent implements OnInit {
 
-  constructor() { }
+  public cities: City[];
+
+  constructor(private http: HttpClient, @Inject('BASE_URL') private baseUrl: string) { }
 
   ngOnInit(): void {
+    this.http.get<City[]>("http://localhost:25786/api/cities").subscribe(result => {
+      this.cities = result;
+    }, error => console.error(error));
   }
 
 }
