@@ -40,7 +40,19 @@ namespace WorldCities.Data
 
         public string SortOrder { get; set; }
 
-        private ApiResult(List<T> data, int count, int pageIndex, int pageSize, string sortColumn, string sortOrder)
+        public string FilterColumn { get; set; }
+
+        public string FilterQuery { get; set; }
+
+        private ApiResult(
+            List<T> data,
+            int count,
+            int pageIndex,
+            int pageSize,
+            string sortColumn,
+            string sortOrder,
+            string filterColumn,
+            string filterQuery)
         {
             Data = data;
             PageIndex = pageIndex;
@@ -49,14 +61,24 @@ namespace WorldCities.Data
             PageSize = pageSize;
             SortColumn = sortColumn;
             SortOrder = sortOrder;
+            FilterColumn = filterColumn;
+            FilterQuery = filterQuery;
         }
 
         public static async Task<ApiResult<T>> CreateAsync(
             IQueryable<T> source,
             int pageIndex, int pageSize,
             string sortColumn = null,
-            string sortOrder = null)
+            string sortOrder = null,
+            string filterColumn = null,
+            string filterQuery = null)
         {
+
+            if (!String.IsNullOrEmpty(filterQuery) && !String.IsNullOrEmpty(filterColumn) && IsValidProperty(filterColumn))
+            {
+                source = source.Where(String.Format("{0}.contains(@0)", filterColumn), filterQuery);
+            }
+
             var count = await source.CountAsync();
 
             if (!String.IsNullOrEmpty(sortColumn) && IsValidProperty(sortColumn))
@@ -76,7 +98,9 @@ namespace WorldCities.Data
                 pageIndex,
                 pageSize,
                 sortColumn,
-                sortOrder
+                sortOrder,
+                filterColumn,
+                filterQuery
             );
         }
 
