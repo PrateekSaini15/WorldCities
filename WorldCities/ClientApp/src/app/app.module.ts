@@ -10,14 +10,16 @@ import { HomeComponent } from './home/home.component';
 import { CitiesComponent } from './cities/cities.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AngularMaterialModule} from './angular-material.module';
+import { CountriesComponent } from './countries/countries.component';
 
 @NgModule({
-  declarations: [
+  declarations: [	
     AppComponent,
     NavMenuComponent,
     HomeComponent,
     CitiesComponent,
-  ],
+    CountriesComponent
+   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
     HttpClientModule,
@@ -25,6 +27,7 @@ import { AngularMaterialModule} from './angular-material.module';
     RouterModule.forRoot([
       { path: '', component: HomeComponent, pathMatch: 'full' },
       {path:'cities', component: CitiesComponent},
+      {path:'countries', component: CountriesComponent}
     ]),
     BrowserAnimationsModule,
     AngularMaterialModule
