@@ -2,17 +2,16 @@
 <p>Here's a list of cities: feel free to play with it.</p>
 <p *ngIf="!cities"><em>Loading...</em></p>
 
+<div class="commands text-right" *ngIf="cities">
+  <button type="button" [routerLink]="['/city']" class="btn btn-success">Add a new city</button>
+</div>
+
 <mat-form-field [hidden]="!cities">
-  <input matInput (keyup) = "loadData ($event.target.value)" placeholder="Filter by name">
+  <input matInput (keyup)="loadData ($event.target.value)" placeholder="Filter by name">
 </mat-form-field>
 
-<table mat-table
-       [dataSource]="cities"
-       class="mat-elevation-z8"
-       [hidden]="!cities"
-       matSort (matSortChange) = "loadData()"
-       matSortActive="{{defaultSortColumn}}"
-       matSortDirection="{{defaultSortOrder}}">
+<table mat-table [dataSource]="cities" class="mat-elevation-z8" [hidden]="!cities" matSort (matSortChange)="loadData()"
+  matSortActive="{{defaultSortColumn}}" matSortDirection="{{defaultSortOrder}}">
 
   <ng-container matColumnDef="id">
     <th mat-header-cell *matHeaderCellDef mat-sort-header>ID</th>
@@ -21,7 +20,7 @@
 
   <ng-container matColumnDef="name">
     <th mat-header-cell *matHeaderCellDef mat-sort-header>Name</th>
-    <td mat-cell *matCellDef="let city">{{city.name}}</td>
+    <td mat-cell *matCellDef="let city"><a [routerLink]="['/city', city.id]">{{city.name}}</a></td>
   </ng-container>
 
   <ng-container matColumnDef="lat">
@@ -39,10 +38,6 @@
 
 </table>
 
-<mat-paginator #paginator
-               [hidden]="!cities"
-               (page) ="getData($event)"
-               [pageSize]="10"
-               [pageSizeOptions]="[10, 20, 50]"
-               showFirstLastButtons>
+<mat-paginator #paginator [hidden]="!cities" (page)="getData($event)" [pageSize]="10" [pageSizeOptions]="[10, 20, 50]"
+  showFirstLastButtons>
 </mat-paginator>

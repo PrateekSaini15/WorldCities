@@ -40,5 +40,59 @@ namespace WorldCities.Controllers
                 filterQuery);
         }
 
+        [HttpPost]
+        public async Task<ActionResult<ApiResult<City>>> PostCity(City city)
+        {
+            _context.Cities.Add(city);
+            await _context.SaveChangesAsync();
+
+            return CreatedAtAction("GetCity", new { id = city.Id }, city);
+        }
+
+        [HttpGet("{id}")]
+        public async Task<ActionResult<City>> GetCity(int id)
+        {
+            City city = await _context.Cities.FindAsync(id);
+
+            if (city == null)
+            {
+                return NotFound();
+            }
+
+            return city;
+        }
+
+        [HttpPut("{id}")]
+        public async Task<IActionResult> PutCity(int id, City city)
+        {
+            if (id != city.Id)
+            {
+                return BadRequest();
+            }
+
+            _context.Entry(city).State = EntityState.Modified;
+
+            try
+            {
+                await _context.SaveChangesAsync();
+            }
+            catch (DbUpdateConcurrencyException)
+            {
+                if (!CityExists(id))
+                {
+                    return NotFound();
+                }
+                else
+                {
+                    throw;
+                }
+            }
+            return NoContent();
+        }
+
+        private bool CityExists(int id)
+        {
+            return _context.Cities.Any(e => e.Id == id);
+        }
     }
 }
