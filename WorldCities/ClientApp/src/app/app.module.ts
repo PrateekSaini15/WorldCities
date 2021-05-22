@@ -14,15 +14,17 @@ import { CityEditComponent } from "./cities/city-edit.component";
 import { AngularMaterialModule } from "./angular-material.module";
 import { CountriesComponent } from "./countries/countries.component";
 import { CountryEditComponent } from "./countries/country-edit.component";
+import { BaseFormComponent } from "./base.form.component";
 @NgModule({
   declarations: [
     AppComponent,
-    NavMenuComponent,
-    HomeComponent,
+    BaseFormComponent,
     CitiesComponent,
     CityEditComponent,
     CountriesComponent,
     CountryEditComponent,
+    HomeComponent,
+    NavMenuComponent,
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: "ng-cli-universal" }),

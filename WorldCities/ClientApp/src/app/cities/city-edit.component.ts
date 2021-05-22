@@ -13,13 +13,14 @@ import { map } from "rxjs/operators";
 
 import { City } from "./City";
 import { Country } from "./../countries/country";
+import { BaseFormComponent } from "../base.form.component";
 
 @Component({
   selector: "app-city-edit",
   templateUrl: "./city-edit.component.html",
   styleUrls: ["./city-edit.component.css"],
 })
-export class CityEditComponent {
+export class CityEditComponent extends BaseFormComponent {
   title: string;
   form: FormGroup;
   city: City;
@@ -30,7 +31,9 @@ export class CityEditComponent {
     private router: Router,
     private http: HttpClient,
     @Inject("BASE_URL") private baseUrl: string
-  ) {}
+  ) {
+    super();
+  }
 
   ngOnInit() {
     this.form = new FormGroup(
