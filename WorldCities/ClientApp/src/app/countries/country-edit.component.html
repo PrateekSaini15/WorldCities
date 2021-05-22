@@ -11,8 +11,7 @@
       <input type="text" id="name" formControlName="name" required placeholder="Country name..." class="form-control" />
 
       <!-- start of validation errors for name field -->
-      <div *ngIf="form.get('name').invalid && (form.get('name').dirty || form.get('name').touched)"
-        class="invalid-feedback">
+      <div *ngIf="hasError('name')" class="invalid-feedback">
         <div *ngIf="form.get('name').errors?.required">
           Name is required.
         </div>
@@ -31,8 +30,7 @@
       <input type="text" id="iso2" required placeholder="2 letters country code..." class="form-control" />
 
       <!-- start of validation errors for iso 2 field -->
-      <div *ngIf="form.get('iso2').invalid && (form.get('iso2').dirty || form.get('iso2').touched)"
-        class="invalid-feedback">
+      <div *ngIf="hasError('iso2')" class="invalid-feedback">
         <div *ngIf="form.get('iso2').errors?.required">
           ISO 3166-1 APLHA-2 country code is required.
         </div>
@@ -54,8 +52,7 @@
       <input type="text" placeholder="3 letters country code..." formControlName="iso3" required class="form-control" />
 
       <!-- start of validation errors for iso3 field -->
-      <div *ngIf="form.get('iso3').invalid && (form.get('iso3').dirty || form.get('iso3').touched)"
-        class="invalid-feedback">
+      <div *ngIf="hasError('iso3')" class="invalid-feedback">
         <div *ngIf="form.get('iso3').errors?.required">
           ISO 3166-1 ALPHA-3 country code is required.
         </div>

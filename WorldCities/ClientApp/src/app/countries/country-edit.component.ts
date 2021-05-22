@@ -11,13 +11,14 @@ import { ActivatedRoute, Router } from "@angular/router";
 import { Observable } from "rxjs";
 import { map } from "rxjs/operators";
 import { Country } from "./country";
+import { BaseFormComponent } from "../base.form.component";
 
 @Component({
   selector: "app-country-edit",
   templateUrl: "./country-edit.component.html",
   styleUrls: ["./country-edit.component.css"],
 })
-export class CountryEditComponent {
+export class CountryEditComponent extends BaseFormComponent {
   title: string;
   form: FormGroup;
   country: Country;
@@ -30,6 +31,7 @@ export class CountryEditComponent {
     private activatedRoute: ActivatedRoute,
     private router: Router
   ) {
+    super();
     this.loadData();
   }
 
